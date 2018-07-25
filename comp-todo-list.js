@@ -13,21 +13,50 @@ class TodoList extends Component {
     }
     
     addItem = (e) => {
-         e.preventDefault();
+         e.preventDefault();  // Will Not Allow the page to Refresh on Button Click
          const {buyFruits} = this.state;
-         const newFruitEntry = this.newFruits.value;
-         this.setState({
-             buyFruits: [...this.state.buyFruits, newFruitEntry]
-         })
+         const newFruitEntry = this.newFruits.value;  // setting the value of Input using ref property
+         const isOnTheList = buyFruits.includes(newFruitEntry); 
+        if(isOnTheList) {
+             this.setState({
+                 message: "This Item is in the List",
+             })
+        }
+        else {
+            newFruitEntry !== '' && this.setState({
+            buyFruits:[...this.state.buyFruits, newFruitEntry],
+            message: ''
+            })
+        }
+         this.AddFruitForm.reset();
+     }
+
+     removeItem(Pdt) {
+         alert("sdfsd");
+        //  const removeBuyItem = this.state.buyFruits.filter(itms => {
+        //      return itms !== Pdt;
+        //  })
+        //  this.setState({
+        //      buyFruits: [...removeBuyItem]
+        //  })
+        //  if(removeBuyItem.length == 0) {
+        //      this.setState({
+        //          message: "No Item in the list",
+        //      })
+        //  }
      }
     render() {
-        const {buyFruits} = this.state;
+        const {buyFruits, message} = this.state; // passing the objects to show their values
         return (
             <div>
-                <form onSubmit={(e)=>this.addItem(e)}> 
-                    <input label="Enter Fruit Name"  id="NewFruits" fullWidth color="inherit" ref={input => this.newFruits = input}/>
+                <form onSubmit={(e)=>this.addItem(e)} ref={formBuyFruit => this.AddFruitForm = formBuyFruit}> 
+                    <input label="Enter Fruit Name"  id="NewFruits" fullWidth color="inherit" ref={txtInput => this.newFruits = txtInput}/>
                     <Button type="submit" > Add</Button>
                 </form>
+                
+                {
+                    message !== '' && <b>{message}</b>
+                }
                 <table>
                     <thead>
                         <th>Fruit</th><th>Edit</th>
@@ -38,7 +67,7 @@ class TodoList extends Component {
                             return(
                                 <tr key={item}>
                                     <td>{item}</td>
-                                    <td>Remove Button</td>
+                                    <td><Button type="submit" onClick={this.removeItem}>Remove</Button></td>
                                 </tr>
                             );
                         })    
