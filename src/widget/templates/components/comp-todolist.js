@@ -3,63 +3,22 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Input from '@material-ui/core/Input';
 import FormControl from '@material-ui/core/FormControl';
-import Table from '@material-ui/core/Table';
-import TableCell from '@material-ui/core/TableCell';
-import TableBody from '@material-ui/core/TableBody';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import {withStyles} from '@material-ui/core/styles';
 
 const ErrorMsg= {
     color: "red",
 }
-
-const Styles = theme => ({
-    root: {
-        width:"100%",
-    }
-});
-
 class TodoList extends Component {
-    // constructor(props) {
-    //     super(props);
-    // }
-    state = {
-            buyFruits: [
-                    {
-                        Id:"fr01",
-                        Name:"Apple",
-                        BuyingPrice:"120",
-                        SellingPrice:"190",
-                        InStock:"Yes",
-                        Amount:"10 Kgs"
-                    },
-                    {
-                        Id:"fr02",
-                        Name:"Banana",
-                        BuyingPrice:"100",
-                        SellingPrice:"170",
-                        InStock:"Yes",
-                        Amount:"101 Kgs"
-                    },
-                    {
-                        Id:"fr03",
-                        Name:"Grapes",
-                        BuyingPrice:"220",
-                        SellingPrice:"250",
-                        InStock:"Yes",
-                        Amount:"102 Kgs"
-                    }
-            ],
+    constructor(props) {  // You can also remove the Constructor and put a simple state
+        super(props);
+        this.state = {
+            buyFruits: ["Applee","Banana","Mango"],
         }
+    }
     
     addItem = (e) => {
-        console.log("cc", this.newFruits)
          e.preventDefault();  // Will Not Allow the page to Refresh on Button Click
          const {buyFruits} = this.state;
          const newFruitEntry = this.newFruits.value;  // setting the value of Input using ref property
-         console.log("buyFruits", buyFruits);
-         console.log("newFruitEntry", newFruitEntry);
          const isOnTheList = buyFruits.includes(newFruitEntry); 
         if(isOnTheList) {
              this.setState({
@@ -76,7 +35,7 @@ class TodoList extends Component {
      }
 
      removeItem(item) {
-         alert("You Want To Remove = "  + item.Id);
+         alert("You Want To Remove = "  + item);
         const removeBuyItem = this.state.buyFruits.filter(buyItem => {
             return buyItem !== item;
         });
@@ -94,45 +53,33 @@ class TodoList extends Component {
         return (
             <div>
                 <form onSubmit={(e)=>this.addItem(e)} ref={formBuyFruit => this.AddFruitForm = formBuyFruit}> 
-                    <input label="Enter Fruit Name"  id="FruitName" fullWidth color="inherit" ref={txtFruitName => this.newFruits = txtFruitName} placeholder="Enter Fruit Name"/>
-                    <input label="Enter Buying Price"  id="BuyingPrice" fullWidth color="inherit" ref={txtBuyingPrice => this.newFruits = txtBuyingPrice} placeholder="Enter Buying Price"/>
-                    <input label="Enter Selling Price"  id="SellingPrice" fullWidth color="inherit" ref={txtSellingPrice => this.newFruits = txtSellingPrice} placeholder="Enter Selling Price"/>
-                    <select label="Enter InStock"  id="InStock" fullWidth color="inherit" ref={txtSelectInStock => this.newFruits = txtSelectInStock}>
-                        <option>In Stock</option>
-                        <option value="yes">Yes</option>
-                        <option value="no">No</option>
-                    </select>
-                    <input label="Enter Amount"  id="Amount" fullWidth color="inherit" ref={txtAmount => this.newFruits = txtAmount} placeholder="Enter Amount"/>
+                    <input label="Enter Fruit Name"  id="NewFruits" fullWidth color="inherit" ref={txtInput => this.newFruits = txtInput}/>
                     <Button type="submit" > Add</Button>
                 </form>
                 
                 {
                     message !== '' && <b style={ErrorMsg}>{message}</b>
                 }
-                <Table>
-                    <TableHead>
-                    <th>Fruit Name</th><th>Buying Price</th><th>Selling Price</th><th>In Stock</th><th>Amount</th><th>Action</th>
-                    </TableHead>
+                <table>
+                    <thead>
+                        <th>Fruit</th><th>Edit</th>
+                    </thead>
                     <tbody>
                     {
                         buyFruits.map(item => {
                             return(
-                                <TableRow key={item.Id}>
-                                    <TableCell>{item.Name}</TableCell>
-                                    <TableCell>{item.BuyingPrice}</TableCell>
-                                    <TableCell>{item.SellingPrice}</TableCell>
-                                    <TableCell>{item.InStock}</TableCell>
-                                    <TableCell>{item.Amount}</TableCell>
-                                    <TableCell><Button type="button" onClick={(e) => this.removeItem(item)}>Remove</Button></TableCell>
-                                </TableRow>
+                                <tr key={item}>
+                                    <td>{item}</td>
+                                    <td><Button type="button" onClick={(e) => this.removeItem(item)}>Remove</Button></td>
+                                </tr>
                             );
                         })    
                     }           
                     </tbody>                    
-                </Table>
+                </table>
             </div>
         );
     }
 }
 
-export default withStyles (Styles) (TodoList);
+export default TodoList;
