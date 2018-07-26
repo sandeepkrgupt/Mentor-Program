@@ -4,7 +4,7 @@ import TextField from '@material-ui/core/TextField';
 import Input from '@material-ui/core/Input';
 import FormControl from '@material-ui/core/FormControl';
 
-const style= {
+const ErrorMsg= {
     color: "red",
 }
 class TodoList extends Component {
@@ -58,7 +58,7 @@ class TodoList extends Component {
                 </form>
                 
                 {
-                    message !== '' && <b style={style}>{message}</b>
+                    message !== '' && <b style={ErrorMsg}>{message}</b>
                 }
                 <table>
                     <thead>
