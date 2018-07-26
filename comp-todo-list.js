@@ -4,6 +4,9 @@ import TextField from '@material-ui/core/TextField';
 import Input from '@material-ui/core/Input';
 import FormControl from '@material-ui/core/FormControl';
 
+const style= {
+    color: "red",
+}
 class TodoList extends Component {
     constructor(props) {
         super(props);
@@ -31,19 +34,19 @@ class TodoList extends Component {
          this.AddFruitForm.reset();
      }
 
-     removeItem(Pdt) {
-         alert("sdfsd");
-        //  const removeBuyItem = this.state.buyFruits.filter(itms => {
-        //      return itms !== Pdt;
-        //  })
-        //  this.setState({
-        //      buyFruits: [...removeBuyItem]
-        //  })
-        //  if(removeBuyItem.length == 0) {
-        //      this.setState({
-        //          message: "No Item in the list",
-        //      })
-        //  }
+     removeItem(item) {
+         alert("You Want To Remove = "  + item);
+        const removeBuyItem = this.state.buyFruits.filter(buyItem => {
+            return buyItem !== item;
+        });
+        this.setState({
+            buyFruits: [...removeBuyItem]
+        });
+        if(removeBuyItem.length == 0) {
+           this.setState({
+                 message: "No Item in the list",
+             })
+         }
      }
     render() {
         const {buyFruits, message} = this.state; // passing the objects to show their values
@@ -55,7 +58,7 @@ class TodoList extends Component {
                 </form>
                 
                 {
-                    message !== '' && <b>{message}</b>
+                    message !== '' && <b style={style}>{message}</b>
                 }
                 <table>
                     <thead>
@@ -67,7 +70,7 @@ class TodoList extends Component {
                             return(
                                 <tr key={item}>
                                     <td>{item}</td>
-                                    <td><Button type="submit" onClick={this.removeItem}>Remove</Button></td>
+                                    <td><Button type="button" onClick={(e) => this.removeItem(item)}>Remove</Button></td>
                                 </tr>
                             );
                         })    
