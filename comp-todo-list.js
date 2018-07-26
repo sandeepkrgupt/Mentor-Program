@@ -8,7 +8,7 @@ const style= {
     color: "red",
 }
 class TodoList extends Component {
-    constructor(props) {
+    constructor(props) {  // You can also remove the Constructor and put a simple state
         super(props);
         this.state = {
             buyFruits: ["Applee","Banana","Mango"],
